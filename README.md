@@ -1,5 +1,5 @@
 # ChessCode
-2D Online Chess Game  [Firebase + Unity + Photon Unity Network 2 (PUN2)] 
+<h3>2D Online Chess Game  [Firebase + Unity + Photon Unity Network 2 (PUN2)] </h3>
 
 
 <h5>You can download my game at (https://github.com/MR0MKK/Chess)  </h5>
