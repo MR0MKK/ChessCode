@@ -2,7 +2,7 @@
 2D Online Chess Game  [Firebase + Unity + Photon Unity Network 2 (PUN2)] 
 
 
-<h1>You can download my game at ![https://github.com/MR0MKK/Chess](https://github.com/MR0MKK/Chess)  </h1>
+<h1>You can download my game at ![LINK](https://github.com/MR0MKK/Chess)  </h1>
 
     ![Imgur](https://i.imgur.com/vE8wkyR.png)
 
