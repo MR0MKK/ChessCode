@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04ad554227ab61c43b9bdcce76c71a7b, type: 3}
+  m_Name: WelcomeLogin
+  m_EditorClassIdentifier: 
+  english: 'Welcome player, we''re thrilled to have you join the game!
+
+    Please
+    login to continue!'
+  vietnamese: "Ch\xE0o m\u1EEBng ng\u01B0\u1EDDi ch\u01A1i, ch\xFAng t\xF4i r\u1EA5t
+    vui khi b\u1EA1n tham gia tr\xF2 ch\u01A1i!\nH\xE3y \u0111\u0103ng nh\u1EADp
+    \u0111\u1EC3 ti\u1EBFp t\u1EE5c!"
+  catalan: "Benvingut jugador, estem encantats d'unir-te al joc!\nSi us plau, inicieu
+    sessi\xF3 per continuar!"
+  italian: 'Benvenuto giocatore, siamo entusiasti di averti unito al gioco!
+
+    Per
+    favore accedi per continuare!'

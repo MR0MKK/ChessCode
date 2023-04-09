@@ -1,0 +1,366 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+// Thuật toán MinMax cho AI
+public static class MiniMax
+{
+    
+    public static AIMovePosition BestMovementWhite()
+    {
+        int value = 0;
+        List<AIMovePosition> selectedMove = new List<AIMovePosition>();
+
+        for (int i = 0; i < Chess.PiecesWhite.Count; i++)
+        {
+
+            List<Vector2> greenPositions = Chess.PiecesWhite[i].GetComponent<PiecesMovement>().SearchGreenPositions();
+            if (greenPositions.Count == 0)
+            {
+                continue;
+            }
+            for (int j = 0; j < greenPositions.Count; j++)
+            { 
+ 
+                Vector2 startPosition = Chess.PiecesWhite[i].transform.position;
+                bool hasMoved = Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove;
+                Chess.PiecesWhite[i].transform.position = greenPositions[j];
+                Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = true;
+
+                int currentValue = BoardValueWhite(greenPositions[j]);
+
+                if (currentValue > value && value != 0)
+                {
+                    Chess.PiecesWhite[i].transform.position = startPosition;
+                    Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                    continue;
+                }
+
+                int valueTemp = BestValueBlack(6, 0,-5000,5000);
+                if (selectedMove.Count == 0 || valueTemp <= value)
+                {
+                    value = valueTemp;
+
+                    if (valueTemp < value)
+                    {
+                        selectedMove.Clear();
+                    }
+
+                    selectedMove.Add(new AIMovePosition(Chess.PiecesWhite[i], greenPositions[j]));
+                }
+                Chess.PiecesWhite[i].transform.position = startPosition;
+                Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                if (value == -100000)
+                {
+                    return selectedMove[Random.Range(0, selectedMove.Count)];
+                }
+            }
+        }
+        return selectedMove[Random.Range(0, selectedMove.Count)];
+    }
+    public static AIMovePosition BestMovementBlack()
+    {
+        int value = 0;
+        List<AIMovePosition> selectedMove = new List<AIMovePosition>();
+
+        for (int i = 0; i < Chess.PiecesBlack.Count; i++)
+        {
+            List<Vector2> greenPositions = Chess.PiecesBlack[i].GetComponent<PiecesMovement>().SearchGreenPositions();
+            if (greenPositions.Count == 0)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < greenPositions.Count; j++)
+            {
+                Vector2 startPosition = Chess.PiecesBlack[i].transform.position;
+                bool hasMoved = Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove;
+                Chess.PiecesBlack[i].transform.position = greenPositions[j];
+                Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = true;
+
+                int currentValue = BoardValueBlack(greenPositions[j]);
+
+                if (currentValue < value && value != 0)
+                {
+                    Chess.PiecesBlack[i].transform.position = startPosition;
+                    Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                    continue;
+                }
+
+                int valueTemp = BestValueWhite(6, 0,-5000,5000);
+                if (selectedMove.Count == 0 || valueTemp >= value)
+                {
+                    value = valueTemp;
+
+                    if (valueTemp > value)
+                    {
+                        selectedMove.Clear();
+                    }
+
+                    selectedMove.Add(new AIMovePosition(Chess.PiecesBlack[i], greenPositions[j]));
+                }
+               Chess.PiecesBlack[i].transform.position = startPosition;
+                Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                if (value == 100000)
+                {
+                    return selectedMove[Random.Range(0, selectedMove.Count)];
+                }
+            }
+        }
+        return selectedMove[Random.Range(0, selectedMove.Count)];
+    }
+
+    static int BestValueWhite(int depth, int previousValue,int alpha,int beta)
+    {
+  
+        List<GameObject> capturedPieces = new List<GameObject>();
+
+        foreach (GameObject piece in Chess.PiecesWhite)
+        {
+            if (Chess.CheckSquareBlack(piece.transform.position))
+            {
+                if (Chess.BlackKingPosition == (Vector2)piece.transform.position)
+                {
+                    foreach (GameObject capturedPiece in capturedPieces)
+                    {
+                        capturedPiece.SetActive(true);
+                    }
+
+                    return -100000;
+                }
+
+                capturedPieces.Add(piece);
+
+                piece.SetActive(false);
+            }
+        }
+
+        int value = 100000;
+        for (int i = 0; i < Chess.PiecesWhite.Count; i++)
+        {
+            Chess.CheckVerification();
+
+            List<Vector2> greenPositions = Chess.PiecesWhite[i].GetComponent<PiecesMovement>().SearchGreenPositions();
+
+            if (greenPositions.Count == 0)
+                continue;
+
+            for (int j = 0; j < greenPositions.Count; j++)
+            {
+                Vector2 startPosition = Chess.PiecesWhite[i].transform.position;
+                bool hasMoved = Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove;
+                Chess.PiecesWhite[i].transform.position = greenPositions[j];
+                Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = true;
+
+                int currentValue = BoardValueWhite(greenPositions[j]);
+
+                if (currentValue > previousValue)
+                {
+                    Chess.PiecesWhite[i].transform.position = startPosition;
+                    Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                    continue;
+                }
+
+                int valueTemp;
+
+                if (depth == 0)
+                {
+                    valueTemp = currentValue;
+                }
+
+                else
+                {
+                    depth--;
+
+                    valueTemp = BestValueBlack(depth, currentValue,alpha,beta);
+                    
+                }
+
+                    if (valueTemp < value)
+                        value = valueTemp;
+                    
+                    if (value >= alpha) // alpha-beta pruning
+                    {
+                        alpha=value;   
+                    }
+
+                    if (value < beta)
+                        beta = value;
+                Chess.PiecesWhite[i].transform.position = startPosition;
+                Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+            }
+        }
+        foreach (GameObject piece in capturedPieces)
+        {
+            piece.SetActive(true);
+        }
+
+        return value;
+    }
+
+   
+  
+    static int BestValueBlack(int depth, int previousValue,int alpha,int beta)
+    {
+
+        List<GameObject> capturedPieces = new List<GameObject>();
+
+        foreach (GameObject piece in Chess.PiecesBlack)
+        {
+            if (Chess.CheckSquareWhite(piece.transform.position))
+            {
+                if (Chess.WhiteKingPosition == (Vector2)piece.transform.position)
+                {
+                    foreach (GameObject capturedPiece in capturedPieces)
+                    {
+                        capturedPiece.SetActive(true);
+                    }
+
+                    return 100000;
+                }
+
+                capturedPieces.Add(piece);
+
+                piece.SetActive(false);
+            }
+        }
+
+        int value = -100000;
+
+        for (int i = 0; i < Chess.PiecesBlack.Count; i++)
+        {
+
+            Chess.CheckVerification();
+             Pieces.Piece a=Chess.PiecesBlack[i].GetComponent<PiecesMovement>().PieceType;
+              Debug.Log(a);
+            List<Vector2> greenPositions = Chess.PiecesBlack[i].GetComponent<PiecesMovement>().SearchGreenPositions();
+
+            if (greenPositions.Count == 0)
+                continue;
+
+            for (int j = 0; j < greenPositions.Count; j++)
+            {
+                Vector2 startPosition = Chess.PiecesBlack[i].transform.position;
+                bool hasMoved = Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove;
+
+                Chess.PiecesBlack[i].transform.position = greenPositions[j];
+                Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = true;
+
+                int currentValue = BoardValueBlack(greenPositions[j]);
+
+                if (currentValue < previousValue)
+                {
+                    Chess.PiecesBlack[i].transform.position = startPosition;
+                    Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+
+                    continue;
+                }
+
+                int valueTemp;
+
+                if (depth == 0)
+                {
+                    valueTemp = currentValue;
+                }
+
+                else
+                {
+                    depth--;
+                    valueTemp = BestValueWhite(depth, currentValue,alpha,beta);
+                    
+                  
+                }
+
+                if (valueTemp > value)
+                {
+                    value = valueTemp;
+                }
+
+                if (value > alpha)
+                {
+                    alpha = value;
+                }
+
+                if (value > beta)
+                        beta = value;
+                          
+                Chess.PiecesBlack[i].transform.position = startPosition;
+                Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
+     
+            }
+        }
+
+        foreach (GameObject piece in Chess.PiecesBlack)
+        {
+            piece.SetActive(true);
+        }
+
+        return value;
+    }
+
+   
+
+    static int BoardValueWhite(Vector2 position)
+    {
+        int value = 0;
+
+        GameObject pieceInPosition = Chess.GetPieceBlackInPosition(position);
+
+        if (pieceInPosition != null)
+        {
+            pieceInPosition.SetActive(false);
+        }
+
+        // Bước tiếp theo là cộng giá trị của từng quân cờ trên bàn cờ của cả hai màu
+
+        for (int i = 0; i < Chess.PiecesWhite.Count; i++)
+        {
+            value += Chess.PiecesWhite[i].GetComponent<PiecesMovement>().Value;
+        }
+
+        for (int i = 0; i < Chess.PiecesBlack.Count; i++)
+        {
+            value += Chess.PiecesBlack[i].GetComponent<PiecesMovement>().Value;
+        }
+
+        if (pieceInPosition != null)
+        {
+            pieceInPosition.SetActive(true);
+        }
+
+        return value;
+    }
+
+   
+    static int BoardValueBlack(Vector2 position)
+    {
+        int value = 0;
+        GameObject pieceInPosition = Chess.GetPieceWhiteInPosition(position);
+
+        if (pieceInPosition != null)
+        {
+            pieceInPosition.SetActive(false);
+        }
+
+        for (int i = 0; i < Chess.PiecesWhite.Count; i++)
+        {
+            value += Chess.PiecesWhite[i].GetComponent<PiecesMovement>().Value;
+        }
+
+        for (int i = 0; i < Chess.PiecesBlack.Count; i++)
+        {
+            value += Chess.PiecesBlack[i].GetComponent<PiecesMovement>().Value;
+        }
+
+        if (pieceInPosition != null)
+        {
+            pieceInPosition.SetActive(true);
+        }
+
+        return value;
+    }
+}

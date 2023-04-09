@@ -1,0 +1,17 @@
+Kiểm tra lần lượt các quân cờ
+	Mỗi quân cờ kiểm tra nước đi hợp lý:
+		Nếu không có nước nào => continue;
+		Nếu có => tạo một CurrentValue = vị trí của 2 đội trên bàn
+			    tạo một ValueTemp = giá trị đã được 6 nước
+			    Nếu chưa nước đi nào được lưu
+		
+Tìm nước đi tốt nhất:
+	Lập danh sách các nước đi bắt quân
+	Với mỗi quân cờ, kiểm tra có quân trắng nào cùng chỗ với quân đen
+		Nếu là vua trắng 	
+	
+	Kiểm tra lần lượt các quân cờ
+		Mỗi quân cờ kiểm tra nước đi hợp lý:
+			Nếu không có nước nào => continue;
+			Nếu có => tạo một CurrentValue = vị trí của 2 đội trên bàn
+		
