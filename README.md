@@ -3,9 +3,7 @@
 
 
 You can download my game at (https://github.com/MR0MKK/Chess)  
-
     ![Imgur](https://i.imgur.com/vE8wkyR.png)
-
     ![Chess](https://i.imgur.com/kcifKLG.png)
 
 Unzip a few file first( because Gthub isnt allow 100MB file):         
