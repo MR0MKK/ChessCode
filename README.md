@@ -3,7 +3,8 @@
 
 
 <h5>You can download my game at (https://github.com/MR0MKK/Chess)  </h5>
-    <h5>![Chess](https://i.imgur.com/kcifKLG.png)</h5>
+    
+    ![Chess](https://i.imgur.com/kcifKLG.png)
 
 <h5>Unzip a few file first( because Gthub isnt allow 100MB file):     </h5>    
 
