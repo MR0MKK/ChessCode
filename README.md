@@ -2,10 +2,10 @@
 2D Online Chess Game  [Firebase + Unity + Photon Unity Network 2 (PUN2)] 
 
 
-You can download my game at (https://github.com/MR0MKK/Chess)  
+<h5>You can download my game at (https://github.com/MR0MKK/Chess)  </h5>
     ![Chess](https://i.imgur.com/kcifKLG.png)
 
-Unzip a few file first( because Gthub isnt allow 100MB file):         
+<h5>Unzip a few file first( because Gthub isnt allow 100MB file):     </h5>    
 
         Assets\Firebase\Plugins\x86_64\FirebaseCppApp-10_7_0.bundle
         
