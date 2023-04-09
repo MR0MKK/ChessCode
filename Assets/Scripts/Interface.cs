@@ -144,6 +144,7 @@ public class Interface : MonoBehaviour
 
     [Header("Email")]
     [SerializeField] Text emailFailText = null; 
+    [SerializeField] Text emailChangePassword = null;
 
     
 
@@ -154,6 +155,8 @@ public class Interface : MonoBehaviour
     public void Awake()
     {
         StartCoroutine(CheckAndFixDependenciesAsync());
+
+        emailChangePassword.GetComponent<Text>().enabled = false;
 
         interfaceClass = this;
 
@@ -1322,8 +1325,10 @@ public class Interface : MonoBehaviour
     {
         return Resources.Load<TranslateText>("Texts/VerifyTryAgain").GetText(Options.ActiveLanguage);
     }
-
-
+    string EmailChangePassword()
+    {
+        return Resources.Load<TranslateText>("Texts/EmailChangePassword").GetText(Options.ActiveLanguage);
+    }
     #endregion
 
     #region Login Change Screen
@@ -1672,6 +1677,11 @@ public class Interface : MonoBehaviour
     #region ChangePassword
     public void ForgotPassword()
     {
+        emailChangePassword.GetComponent<Text>().enabled = true;
+        emailChangePassword.text=EmailChangePassword();
+        emailChangePassword.text +=user.Email;
+        // emailChangePassword.SetActive(true);
+        
         auth.SendPasswordResetEmailAsync(user.Email).ContinueWith(task=>{
             if (task.IsCanceled) 
             {
