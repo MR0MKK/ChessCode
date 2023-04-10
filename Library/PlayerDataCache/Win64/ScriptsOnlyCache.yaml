@@ -907,4 +907,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/Chess.unity
-  playerPath: D:/DESKTOP/upgrade/Chess.exe
+  playerPath: D:/DESKTOP/ChessWibu/Chess.exe

@@ -189,6 +189,7 @@ public class Interface : MonoBehaviour
 
         panel.SetActive(true);
         mainMenu.SetActive(true);
+        emailChangePassword.GetComponent<Text>().enabled = false;
         panelPause.SetActive(false);
         panelGame.SetActive(false);
     }
@@ -208,6 +209,7 @@ public class Interface : MonoBehaviour
         mainMenu.SetActive(true);
         panelPause.SetActive(false);
         panelGame.SetActive(false);
+       
     }
 
     
@@ -628,6 +630,7 @@ public class Interface : MonoBehaviour
     
     public void BackToMenuEndGame()
     {
+        
         Chess.CleanScene();
         buttonRestart.SetActive(true);
 
@@ -695,6 +698,7 @@ public class Interface : MonoBehaviour
         mainMenu.SetActive(false);
         panelPause.SetActive(false);
         panelGame.SetActive(true);
+        
     }
 
     
@@ -1341,8 +1345,10 @@ public class Interface : MonoBehaviour
 
     public void OpenRegistrationPanel()
     {
+        
         ClearRegisterInput();
         OpenPanelMenu(15);
+        emailFailText.GetComponent<Text>().enabled = false;
     }
 
     private void ClearLoginInput()
@@ -1518,8 +1524,9 @@ public class Interface : MonoBehaviour
 
     private IEnumerator RegisterAsync(string name, string email, string password, string confirmPassword)
     {
-        emailFailText.GetComponent<Text>().enabled = false;
-        
+       
+        // emailChangePassword.GetComponent<Text>().enabled = false;
+
         if (name == "")
         {
             Debug.LogError("User Name is empty");
@@ -1560,7 +1567,7 @@ public class Interface : MonoBehaviour
                         registerFailText.text = RegisterFailMessage();
                         break;
                 }
-                if(!(emailRegisterField.text.EndsWith("@gmail.com") || emailRegisterField.text.EndsWith("@yahoo.com")))
+                if(!(email.EndsWith("@gmail.com") || email.EndsWith("@yahoo.com")))
                 {
                     registerFailText.text = RegisterFailEmailWrong();
                 }
@@ -1607,7 +1614,9 @@ public class Interface : MonoBehaviour
                     }
                     else
                     {
+                        
                         SendEmailForVerification();
+                        
                     }
                 }
             }
@@ -1647,29 +1656,31 @@ public class Interface : MonoBehaviour
                         emailFailText.text = VerifyTryAgain();
                         break;
                 }
-                ShowVerificantionResponse(false,user.Email,emailFailText.text );
+                ShowVerificantionResponse(false,emailFailText.text );
             }
             else
             {
-                ShowVerificantionResponse(true,user.Email,null );
+                ShowVerificantionResponse(true,null );
                 Debug.Log("Success");
             }
         }
     }
 
-    public void ShowVerificantionResponse(bool isEmailSent,string emailid, string errorMessage)
+    public void ShowVerificantionResponse(bool isEmailSent, string errorMessage)
     {
         if(isEmailSent)
         {
             emailFailText.text =VerifyEmail();
-            emailFailText.text +=emailid;
-            emailFailText.text +="!!!";
+            emailFailText.text +=user.Email;
+            registerFailText.GetComponent<Text>().enabled = false;
+            emailFailText.GetComponent<Text>().enabled = true;
         }
         else
         {
             emailFailText.text =NoVerifyEmail();
-            emailFailText.text +=emailid;
-            emailFailText.text +="!!!";
+            emailFailText.text +=user.Email;
+            registerFailText.GetComponent<Text>().enabled = false;
+            emailFailText.GetComponent<Text>().enabled = true;
         }
     }
     #endregion
@@ -1677,9 +1688,10 @@ public class Interface : MonoBehaviour
     #region ChangePassword
     public void ForgotPassword()
     {
-        emailChangePassword.GetComponent<Text>().enabled = true;
+        
         emailChangePassword.text=EmailChangePassword();
         emailChangePassword.text +=user.Email;
+        emailChangePassword.GetComponent<Text>().enabled = true;
         // emailChangePassword.SetActive(true);
         
         auth.SendPasswordResetEmailAsync(user.Email).ContinueWith(task=>{
