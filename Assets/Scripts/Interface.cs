@@ -1340,6 +1340,7 @@ public class Interface : MonoBehaviour
     {
         ClearLoginInput();
         OpenPanelMenu(14);
+        loginFailText.GetComponent<Text>().enabled = false;
         
     }
 
@@ -1545,7 +1546,7 @@ public class Interface : MonoBehaviour
             yield return new WaitUntil(() => registerTask.IsCompleted);
             if (registerTask.Exception != null)
             {
-                Debug.LogError(registerTask.Exception);
+                Debug.LogError(email);
                 FirebaseException firebaseException = registerTask.Exception.GetBaseException() as FirebaseException;
                 AuthError authError = (AuthError)firebaseException.ErrorCode;
                 
@@ -1571,6 +1572,8 @@ public class Interface : MonoBehaviour
                 {
                     registerFailText.text = RegisterFailEmailWrong();
                 }
+                emailFailText.GetComponent<Text>().enabled = false;
+                registerFailText.GetComponent<Text>().enabled = true;
             }
             else
             {
@@ -1614,8 +1617,8 @@ public class Interface : MonoBehaviour
                     }
                     else
                     {
-                        
-                        SendEmailForVerification();
+                        emailFailText.GetComponent<Text>().enabled = false;
+                        // SendEmailForVerification();
                         
                     }
                 }
