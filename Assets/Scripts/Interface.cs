@@ -1303,6 +1303,11 @@ public class Interface : MonoBehaviour
     {
         return Resources.Load<TranslateText>("Texts/RegisterFailPasswordMissing").GetText(Options.ActiveLanguage);
     }
+    string RegisterFailDifferentPassword()
+    {
+        return Resources.Load<TranslateText>("Texts/RegisterFailDifferentPassword").GetText(Options.ActiveLanguage);
+    }
+
 
     // Verification Email
     string VerifyCancel()
@@ -1526,19 +1531,25 @@ public class Interface : MonoBehaviour
     private IEnumerator RegisterAsync(string name, string email, string password, string confirmPassword)
     {
        
-        // emailChangePassword.GetComponent<Text>().enabled = false;
-
+        // registerFailText.GetComponent<Text>().enabled = true;
+        emailFailText.GetComponent<Text>().enabled = false;
         if (name == "")
         {
-            Debug.LogError("User Name is empty");
+            registerFailText.text = RegisterFailMessage();
+            registerFailText.GetComponent<Text>().enabled = true;
+            ;
         }
         else if (email == "")
         {
-            Debug.LogError("email field is empty");
+            registerFailText.text = RegisterFailEmailMissing();
+            registerFailText.GetComponent<Text>().enabled = true;
         }
+        
         else if (passwordRegisterField.text != confirmPasswordRegisterField.text)
         {
-            Debug.LogError("Password does not match");
+            registerFailText.text = RegisterFailDifferentPassword();
+            registerFailText.GetComponent<Text>().enabled = true;
+            Debug.LogError("Passwrod incorrect");
         }
         else
         {
@@ -1574,6 +1585,7 @@ public class Interface : MonoBehaviour
                 }
                 emailFailText.GetComponent<Text>().enabled = false;
                 registerFailText.GetComponent<Text>().enabled = true;
+
             }
             else
             {
@@ -1607,6 +1619,8 @@ public class Interface : MonoBehaviour
                             registerFailText.text = RegisterFailMessage();
                             break;
                     }
+                    emailFailText.GetComponent<Text>().enabled = false;
+                    registerFailText.GetComponent<Text>().enabled = true;
                 }
                 else
                 {
@@ -1617,8 +1631,8 @@ public class Interface : MonoBehaviour
                     }
                     else
                     {
-                        emailFailText.GetComponent<Text>().enabled = false;
-                        // SendEmailForVerification();
+                        emailFailText.GetComponent<Text>().enabled = true;
+                        SendEmailForVerification();
                         
                     }
                 }
@@ -1677,6 +1691,8 @@ public class Interface : MonoBehaviour
             emailFailText.text +=user.Email;
             registerFailText.GetComponent<Text>().enabled = false;
             emailFailText.GetComponent<Text>().enabled = true;
+            loginFailText.text = emailFailText.text;
+            loginFailText.GetComponent<Text>().enabled = true;
         }
         else
         {
@@ -1684,6 +1700,8 @@ public class Interface : MonoBehaviour
             emailFailText.text +=user.Email;
             registerFailText.GetComponent<Text>().enabled = false;
             emailFailText.GetComponent<Text>().enabled = true;
+            loginFailText.text = emailFailText.text;
+            loginFailText.GetComponent<Text>().enabled = true;
         }
     }
     #endregion
