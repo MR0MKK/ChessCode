@@ -46,7 +46,7 @@ public static class MiniMax
                     continue;
                 }
 
-                int valueTemp = BestValueBlack(10, 0,-10000,10000);
+                int valueTemp = BestValueBlack(6, 0,-10000,10000);
 
                 // Trắng tìm các giảm "giá trị của đen"
                 // Nếu bé hơn giá trị ta tìm được => skip
@@ -125,7 +125,7 @@ public static class MiniMax
                     continue;
                 }
 
-                int valueTemp = BestValueWhite(10, 0,-10000,10000);
+                int valueTemp = BestValueWhite(6, 0,-10000,10000);
 
                 // Đen tìm các giảm "giá trị của trắng"
                 // Nếu bé hơn giá trị ta tìm được => skip

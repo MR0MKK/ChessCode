@@ -421,7 +421,7 @@ public class Interface : MonoBehaviour
     {
         if (link == 0)
         {
-            Application.OpenURL("https://www.facebook.com/");
+            Application.OpenURL("https://www.facebook.com/profile.php?id=100009756049363");
         }
 
         else
@@ -1468,6 +1468,7 @@ public class Interface : MonoBehaviour
                     loginFailText.text = LoginFailMessage();  
                     break;
             }
+            loginFailText.GetComponent<Text>().enabled = true;
         }
         else
         {
