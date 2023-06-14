@@ -7,8 +7,7 @@ public class TranslateText : ScriptableObject
 {
     [TextArea(5, 10)] [SerializeField] string english = null;
     [TextArea(5, 10)] [SerializeField] string vietnamese = null;
-    [TextArea(5, 10)] [SerializeField] string catalan = null;
-    [TextArea(5, 10)] [SerializeField] string italian = null;
+
 
     
     // Chọn ngôn ngữ của bạn
@@ -20,10 +19,6 @@ public class TranslateText : ScriptableObject
                 return english;
             case Options.Language.VI:
                 return vietnamese;
-            case Options.Language.CA:
-                return catalan;
-            case Options.Language.IT:
-                return italian;
             default:
                 return english;
         }

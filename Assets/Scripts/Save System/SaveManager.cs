@@ -10,9 +10,7 @@ public static class SaveManager
 
     
     // Lưu dữ liệu game vào file
-   
-    /// <param name="saveSlot">Slot game từ 0->3</param>
-    /// <param name="dataRaw">Dữ liệu thô của game cần lưu</param>
+
     public static void SaveGame(int saveSlot, SaveDataRaw dataRaw)
     {
         // 
@@ -64,8 +62,6 @@ public static class SaveManager
 
     
     // Tải dữ liệu hiện có trong file 
-   
-    /// <param name="saveSlot">Slot game từ 0->3</param>
     public static SaveData LoadGame(int saveSlot)
     {
         // Lưu theo "path"
@@ -263,7 +259,6 @@ public static class SaveManager
     // Deserializes mảng byte để có thể đọc
    
     /// <param name="byteData">Dữ liệu ở dạng mảng byte</param>
-    /// <returns></returns>
     public static SaveData Deserialize(byte[] byteData)
     {
         BinaryFormatter formatter = new BinaryFormatter();

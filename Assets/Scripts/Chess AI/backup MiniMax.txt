@@ -36,7 +36,7 @@ public static class MiniMax
                 Chess.PiecesWhite[i].transform.position = greenPositions[j];
                 Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = true;
 
-	       int currentValue = BoardValueWhite(greenPositions[j]);
+	            int currentValue = BoardValueWhite(greenPositions[j]);
 
                 if (currentValue > value && value != 0)
                 {
@@ -46,7 +46,7 @@ public static class MiniMax
                     continue;
                 }
 
-                int valueTemp = BestValueBlack(8, 0,-5000,5000);
+                int valueTemp = BestValueBlack(4, currentValue);
 
                 // Trắng tìm các giảm "giá trị của đen"
                 // Nếu bé hơn giá trị ta tìm được => skip
@@ -54,13 +54,13 @@ public static class MiniMax
 
                 if (selectedMove.Count == 0 || valueTemp <= value)
                 {                   
-                    if( selectedMove.Count != 0)
+                    value = valueTemp;
+
+                    if (valueTemp < value)
                     {
                         selectedMove.Clear();
                     }
-                    
-                
-                    value = valueTemp;
+
 
                     selectedMove.Add(new AIMovePosition(Chess.PiecesWhite[i], greenPositions[j]));
                 }
@@ -70,7 +70,7 @@ public static class MiniMax
                 Chess.PiecesWhite[i].transform.position = startPosition;
                 Chess.PiecesWhite[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
 
-                if (value == -100000)
+                if (value == -10000)
                 {
                     return selectedMove[Random.Range(0, selectedMove.Count)];
                 }
@@ -100,7 +100,8 @@ public static class MiniMax
             {
                 continue;
             }
-           
+            
+            
             for (int j = 0; j < greenPositions.Count; j++)
             {
                 // Lưu các biến của quân cờ (vị trí và nếu nó có thể di chuyển) để có thể phục hồi
@@ -113,7 +114,7 @@ public static class MiniMax
                 Chess.PiecesBlack[i].transform.position = greenPositions[j];
                 Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = true;
 
-		int currentValue = BoardValueBlack(greenPositions[j]);
+		        int currentValue = BoardValueBlack(greenPositions[j]);
 
 
                 if (currentValue < value && value != 0)
@@ -124,24 +125,29 @@ public static class MiniMax
                     continue;
                 }
 
-                int valueTemp = BestValueWhite(8, 0,-5000,5000);
+                int valueTemp = BestValueWhite(4, currentValue);
 
-                Debug.Log(valueTemp);
                 // Đen tìm các giảm "giá trị của trắng"
                 // Nếu bé hơn giá trị ta tìm được => skip
                 // Lớn hơn giá trị ta tìm được => thêm
 
                 if (selectedMove.Count == 0 || valueTemp >= value)
                 {
-                    
-                    if( selectedMove.Count != 0)
+                    value = valueTemp;
+
+                    if (valueTemp > value)
                     {
                         selectedMove.Clear();
                     }
-                    
-                    value = valueTemp;
+
+                Debug.Log(Chess.PiecesBlack[i].GetComponent<PiecesMovement>().PieceType);
+                // Debug.Log(greenPositions.Count);
+                Debug.Log(value);
+                Debug.Log(greenPositions[j]);    
+
 
                     selectedMove.Add(new AIMovePosition(Chess.PiecesBlack[i], greenPositions[j]));
+                    
                 }
 
                 // Trả lại các quan về vị trí ban đầu
@@ -149,7 +155,7 @@ public static class MiniMax
                 Chess.PiecesBlack[i].transform.position = startPosition;
                 Chess.PiecesBlack[i].GetComponent<PiecesMovement>().FirstMove = hasMoved;
 
-                if (value == 100000)
+                if (value == 10000)
                 {
                     return selectedMove[Random.Range(0, selectedMove.Count)];
                 }
@@ -162,7 +168,7 @@ public static class MiniMax
     }
 
     // Tính toán giá trị tốt nhất của Trắng tại 1 thời điểm
-    static int BestValueWhite(int depth, int previousValue,int alpha,int beta)
+      static int BestValueWhite(int depth, int previousValue)
     {
         // Kiểm tra xem không có quân đen và trắng nào trên cùng một ô vuông.
         // Quân trắng bị quân đen bắt
@@ -181,7 +187,7 @@ public static class MiniMax
                         capturedPiece.SetActive(true);
                     }
 
-                    return -100000;
+                    return -10000;
                 }
 
                 capturedPieces.Add(piece);
@@ -192,14 +198,14 @@ public static class MiniMax
 
         // Gía trị ban đầu
 
-        int value = 100000;
+        int value = 10000;
         Chess.CheckVerification();
 
         for (int i = 0; i < Chess.PiecesWhite.Count; i++)
         {
             // Mỗi phần, cập nhật danh sách các vị trí và kiểm tra các nước đi hợp pháp.
 
-                
+            Chess.CheckVerification();    
 
             // List<Vector2> greenPositions = Chess.PiecesWhite[i].GetComponent<PiecesMovement>().SearchGreenPositions();
             GameObject piece = Chess.PiecesWhite[i];
@@ -251,7 +257,7 @@ public static class MiniMax
                 {
                     depth--;
 
-                    valueTemp = BestValueBlack(depth, currentValue,alpha,beta);
+                    valueTemp = BestValueBlack(depth, currentValue);
                     
                     // giá trị tốt nhất cho Trắng, tìm kiếm giá trị thấp nhất cho Đen
 
@@ -259,18 +265,7 @@ public static class MiniMax
 
                     if (valueTemp < value)
                         value = valueTemp;
-                    
-                    if (value >= alpha) // alpha-beta pruning
-                    {
-                        alpha=value;   
-                    }
-
-                    if (value < beta)
-                        beta = value;
-                    
-                    
-
-           
+                      
                 // Trả lại các quân về vị trí ban đầu của chúng.
                 piece.transform.position = startPosition;
                 pieceMovement.FirstMove = hasMoved;
@@ -286,11 +281,8 @@ public static class MiniMax
         }
 
         return value;
-    }
-
-   
-  
-    static int BestValueBlack(int depth, int previousValue,int alpha,int beta)
+    } 
+static int BestValueBlack(int depth, int previousValue)
     {
         List<GameObject> capturedPieces = new List<GameObject>();
 
@@ -305,7 +297,7 @@ public static class MiniMax
                         capturedPiece.SetActive(true);
                     }
 
-                    return 100000;
+                    return 10000;
                 }
 
                 capturedPieces.Add(piece);
@@ -314,12 +306,12 @@ public static class MiniMax
             }
         }
 
-        int value = -100000;
+        int value = -10000;
         Chess.CheckVerification();
         for (int i = 0; i < Chess.PiecesBlack.Count; i++)
         {
 
-            
+            Chess.CheckVerification();
       
             // List<Vector2> greenPositions = Chess.PiecesBlack[i].GetComponent<PiecesMovement>().SearchGreenPositions();
 
@@ -364,7 +356,7 @@ public static class MiniMax
                 else
                 {
                     depth--;
-                    valueTemp = BestValueWhite(depth, currentValue,alpha,beta);
+                    valueTemp = BestValueWhite(depth, currentValue);
                     
                   
                 }
@@ -373,14 +365,6 @@ public static class MiniMax
                 {
                     value = valueTemp;
                 }
-
-                if (value > alpha)
-                {
-                    alpha = value;
-                }
-
-                if (value > beta)
-                    beta = value;
                           
                 piece.transform.position = startPosition;
                 pieceMovement.FirstMove = hasMoved;

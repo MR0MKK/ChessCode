@@ -380,7 +380,6 @@ public static class Chess
     public static void MovePiece(Vector2 position)
     {
         // Trả ô vuông về màu ban đầu của nó
-
         ResetColour();
 
         // Tăng số lần di chuyển( quá 50 nước chưa)
@@ -2010,7 +2009,6 @@ public static class Chess
     
     public static void MoveAIPiece()
     {
-        
         if (PlayerColour == Enums.Colours.White && playerInTurn == Enums.Colours.Black)
         {
             AIMovePosition bestMove = MiniMax.BestMovementBlack();

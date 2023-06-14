@@ -95,6 +95,21 @@ public class Knight
     public int PositionValue => (colour == Pieces.Colour.White) ? GetPositionValueWhite() : GetPositionValueBlack();
     #endregion
     
+    // Chặn nước đi của quân khiến Vua bị chiếu hết
+    
+    public void ActivateForbiddenPositions()
+    {
+        if (colour == Pieces.Colour.White)
+        {
+            SetForbiddenPositionsWhite();
+        }
+
+        else
+        {
+            SetForbiddenPositionsBlack();
+        }
+    }
+
     #region Danh sách các nước có thể thực hiện nhưng chưa block
     // Danh sách các nước quân Trắng có thể thực hiện
     // Danh sách các nước đi của quân cờ có thể thực hiện trước khi lọc ra các nước bị chặn
@@ -212,6 +227,323 @@ public class Knight
     }
     #endregion
     
+    #region Chặn nước gây chiếu 
+    // Nếu các nước đi quân đên gây Vua bị chiếu => chặn
+    
+    void SetForbiddenPositionsWhite()
+    {
+        bool firstJump = false;
+        GameObject selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x + 1, position.y + 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x + 1, position.y + 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+            }
+            
+            
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x + 2, position.y + 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x + 2, position.y + 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+
+            
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x + 2, position.y - 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x + 2, position.y - 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+      
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x + 1, position.y - 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x + 1, position.y - 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+            
+
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x - 1, position.y - 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x - 1, position.y - 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+            }
+    
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x - 1, position.y + 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x - 1, position.y + 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x - 2, position.y - 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x - 2, position.y - 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+   
+            }
+
+        }   
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareBlack(new Vector2(position.x - 2, position.y + 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceBlackInPosition(new Vector2(position.x - 2, position.y + 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.BlackKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+    
+        }  
+    }
+    
+    void SetForbiddenPositionsBlack()
+    {
+        bool firstJump = false;
+        GameObject selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x + 1, position.y + 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x + 1, position.y + 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+     
+            
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x + 2, position.y + 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x + 2, position.y + 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+  
+            
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x + 2, position.y - 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x + 2, position.y - 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+  
+            }
+
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x + 1, position.y - 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x + 1, position.y - 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+                    return;
+                }
+   
+            }
+   
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x - 1, position.y - 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x - 1, position.y - 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+ 
+            }
+
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x - 1, position.y + 2)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x - 1, position.y + 2));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+ 
+            }
+
+        }
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x - 2, position.y - 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x - 2, position.y - 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+
+        }   
+
+        firstJump = false;
+        selectedPiece = null;
+
+        if(Chess.CheckSquareWhite(new Vector2(position.x - 2, position.y + 1)))
+        {
+            if (!firstJump)
+            {
+                selectedPiece = Chess.GetPieceWhiteInPosition(new Vector2(position.x - 2, position.y + 1));
+
+                if ((Vector2)selectedPiece.transform.position == Chess.WhiteKingPosition)
+                {
+
+                    return;
+                }
+
+            }
+        
+        }  
+    }
+
+    #endregion
+
     #region Giá trị quân cờ vị trí hiện tại
     // Giá trị quân trắng vị trí hiện tại 
     int GetPositionValueWhite()
@@ -239,7 +571,7 @@ public class Knight
         {
             { -50, -40, -30, -30, -30, -30, -40, -50 },
             { -40, -20, 00, 00, 00, 00, -20, -40 },
-            { -30, 00, 10, 15, 15, 10, 00, -30 },
+            { -30, 00, -5, 15, 15, -5, 00, -30 },
             { -30, 05, 15, 20, 20, 15, 05, -30 },
             { -30, 00, 15, 20, 20, 15, 00, -30 },
             { -30, 05, 10, 15, 15, 10, 05, -30 },

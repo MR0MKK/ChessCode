@@ -26,7 +26,9 @@ public class Pieces : ScriptableObject
         TopRight,
         TopLeft,
         BottomRight,
-        BottomLeft
+        BottomLeft,
+        L1,L2,L3,L4,
+        R1,R2,R3,R4
     };
 
     
@@ -218,10 +220,12 @@ public class Pieces : ScriptableObject
             constructor.ActivateForbiddenPositions();
         }
 
-        else if (piece == Piece.Knight)
-        {
-            return;
-        }
+        // else if (piece == Piece.Knight)
+        // {
+        //     Knight constructor = new Knight(position, colour);
+
+        //     constructor.ActivateForbiddenPositions();;
+        // }
 
         else
         {

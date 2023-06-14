@@ -472,14 +472,6 @@ public class Interface : MonoBehaviour
             case 1:
                 Options.ActiveLanguage = Options.Language.VI;
                 break;
-
-            case 2:
-                Options.ActiveLanguage = Options.Language.CA;
-                break;
-
-            case 3:
-                Options.ActiveLanguage = Options.Language.IT;
-                break;
         }
 
         Options.SaveOptions();

@@ -362,25 +362,6 @@ public class King
     {
         int[,] whiteValue =
         {
-            { -20, -30, -10, 00, 00, -10, -30, -20 },
-            { -20, -20, 00, 00, 00, 00, -20, -20 },
-            { 10, 20, 20, 20, 20, 20, 20, 10 },
-            { 20, 30, 30, 40, 40, 30, 30, 20 },
-            { 30, 40, 40, 50, 50, 40, 40, 30 },
-            { 30, 40, 40, 50, 50, 40, 40, 30 },
-            { 30, 40, 40, 0, 0, 0, 40, 30 },
-            { 30, 40, 70, 50, 50, 40, 70, 30 }
-        };
-
-        return -20000 + whiteValue[(int)position.y - 1, (int)position.x - 1];
-    }
-
-    
-     // Giá trị quân đen vị trí hiện tại  
-    int GetPositionValueBlack()
-    {
-        int[,] blackValue =
-        {
             { 30, 40, 70, 50, 50, 40, 70, 30 },
             { 30, 40, 40, 0, 0, 0, 40, 30 },
             { 30, 40, 40, 50, 50, 40, 40, 30 },
@@ -391,7 +372,26 @@ public class King
             { -20, -30, -10, 00, 00, -10, -30, -20 }
         };
 
-        return 20000 + blackValue[(int)position.y - 1, (int)position.x - 1];
+        return -100 + whiteValue[(int)position.y - 1, (int)position.x - 1];
+    }
+
+    
+     // Giá trị quân đen vị trí hiện tại  
+    int GetPositionValueBlack()
+    {
+        int[,] blackValue =
+        {
+            { -50, -30, -30, -30, -30, -30, -30, -50 },
+            { -30, -30, 00, -50, -50, 00, -30, -30 },
+            { -30, -10, 20, -30, -30, 20, -10, -30 },
+            { -30, -10, 30, 40, 40, 30, -10, -30 },
+            { -30, -10, 30, 40, 40, 30, -10, -30 },
+            { -30, -10, 20, 30, 30, 20, -10, -30 },
+            { -30, -20, -10, 00, 00, -10, -20, -30 },
+            { -50, -40, -30, -20, -20, -30, -40, -50 }
+        };
+
+        return 100 + blackValue[(int)position.y - 1, (int)position.x - 1];
     }
 
     
@@ -410,7 +410,7 @@ public class King
             { -50, -40, -30, -20, -20, -30, -40, -50 }
         };
 
-        return -20000 + whiteValueEnd[(int)position.y - 1, (int)position.x - 1];
+        return -10000 + whiteValueEnd[(int)position.y - 1, (int)position.x - 1];
     }
 
    
@@ -429,7 +429,7 @@ public class King
             { 50, 30, 30, 30, 30, 30, 30, 50 }
         };
 
-        return 20000 + blackValueEnd[(int)position.y - 1, (int)position.x - 1];
+        return 10000 + blackValueEnd[(int)position.y - 1, (int)position.x - 1];
     }
     #endregion
 

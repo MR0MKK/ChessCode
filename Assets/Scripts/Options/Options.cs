@@ -12,8 +12,7 @@ public static class Options
     public enum Language { 
         EN,
         VI,
-        CA,
-        IT };
+        };
     public enum Server { 
         Asia,
         Australia,
@@ -67,17 +66,6 @@ public static class Options
         {
             ActiveLanguage = Language.VI;
         }
-
-        else if (Application.systemLanguage == SystemLanguage.Catalan)
-        {
-            ActiveLanguage = Language.CA;
-        }
-
-        else if (Application.systemLanguage == SystemLanguage.Italian)
-        {
-            ActiveLanguage = Language.IT;
-        }
-
         else
         {
             ActiveLanguage = Language.EN;

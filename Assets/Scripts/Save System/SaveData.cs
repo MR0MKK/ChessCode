@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,7 +20,6 @@ public class SaveData
     // Vị trí trục X của quân tốt bị thịt (lưu vị trí ảo, mất sau khi hết lượt)
     public readonly int enPassantPositionX;
     // Vị trí trục Y của quân tốt bị thịt (lưu vị trí ảo, mất sau khi hết lượt)
-    
     public readonly int enPassantPositionY;
 
 
@@ -29,7 +28,7 @@ public class SaveData
 
 
     
-    // Número de estados anteriores que van a ser guardados.
+    // Số trạng thái trước đó sẽ được lưu
     public readonly int positionsSaved;    
     // Số lượng các quân được lưu
     public int numberOfPieces;    
@@ -52,8 +51,9 @@ public class SaveData
     // Tất cả các vị trí trục X của quân đen trên bàn cờ.
     public int[] blackPositionsX;
     // Tất cả các vị trí trục Y của quân đen trên bàn cờ
-    
     public int[] blackPositionsY;
+
+    
     // Danh sách các quân trắng trên bàn cờ
     public Pieces.Piece[] whitePieces;
     // Danh sách các quân đen trên bàn cờ
@@ -85,7 +85,7 @@ public class SaveData
         // Lưu dữ liệu của các bước đi cuối
 
         positionsSaved = data.savedPositions.Count;
-        SetPositionRecord(data.savedPositions);
+ 
 
         // Lưu trạng thái của bảng
 
@@ -102,34 +102,7 @@ public class SaveData
         return time.ToString("dd-MM-yyyy  HH:mm:ss");
     }
     
-    /// <param name="savedPositions">Danh sách với các vị trí đã lưu</param>
-    void SetPositionRecord(List<PositionRecord> savedPositions)
-    {
-        // Lưu số lượng quân khi tải trò chơi
 
-        numberOfPieces = savedPositions[0].positions.Count;
-
-        // Tạo các danh sách có các vị trí đã lưu( X, Y, loại quân và màu đội)
-        List<int> tempListPositionsX = new List<int>();
-        List<int> tempListPositionsY = new List<int>();
-        List<Pieces.Piece> tempListPieces = new List<Pieces.Piece>();
-        List<Pieces.Colour> tempListColours = new List<Pieces.Colour>();
-
-        for (int i = 0; i < savedPositions.Count; i++)
-        {
-            tempListPositionsX = tempListPositionsX.Concat(savedPositions[i].GetPositionsX()).ToList();
-            tempListPositionsY = tempListPositionsY.Concat(savedPositions[i].GetPositionsY()).ToList();
-            tempListPieces = tempListPieces.Concat(savedPositions[i].pieces).ToList();
-            tempListColours = tempListColours.Concat(savedPositions[i].colours).ToList();
-        }
-
-        // Chuyển danh sách thành mảng 
-        savedPositionsX = tempListPositionsX.ToArray();
-        savedPositionsY = tempListPositionsY.ToArray();
-        savedPieces = tempListPieces.ToArray();
-        savedColours = tempListColours.ToArray();
-    }
-    
     // <param name="piecesWhite">Danh sách tất cả các quân trắng trên bàn cờ.</param>
     // <param name="piecesBlack">Danh sách tất cả các quân đen trên bàn cờ.</param>
     void SetPositions(List<GameObject> piecesWhite, List<GameObject> piecesBlack)
